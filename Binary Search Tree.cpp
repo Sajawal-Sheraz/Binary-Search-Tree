@@ -55,8 +55,74 @@ void insert(node *tree, node *leaf)
 }
 
 
+int height(node* root){
+    if(root==NULL){
+        return 0;
+    }
+    else{
+        int left_height=height(root->left);
+        int right_height=height(root->right);
+        if(left_height>right_height){
+            return (left_height+1);
+        }
+        else{
+            return (left_height+1);
+        }
+    }
+}
+void findbsf(node* root,int lvl){
+    if(root==NULL){
+        return;
+    }
+    else if(lvl==1){
+        cout<<root->data<<" ";
+    }
+    else if(lvl>1){
+        findbsf(root->left,lvl-1);
+        findbsf(root->right,lvl-1);
+    }
 
-
+}
+void bsf(node* root){
+    int h=height(root);
+    for(int i=0;i<=h;i++){
+        findbsf(root,i);
+    }
+}
+void dfs_pre(node* ptr){
+    if(root==NULL){
+        cout<<"Empty";
+        return;
+    }
+    if(ptr!=NULL){
+         cout<<ptr->data<<" ";
+        dfs_pre(ptr->left);
+        dfs_pre(ptr->right);
+    }
+}
+void dfs_in(node* ptr){
+    if(root == NULL){
+        cout<<"Empty"<<endl;
+        return;
+    }
+    if(ptr!=NULL){
+        dfs_in(ptr->left);
+        cout<<ptr->data<<" ";
+        dfs_in(ptr->right);
+    }
+}
+void dfs_post(node* ptr){
+    if(root==NULL){
+        cout<<"Empty"<<endl;
+        return;
+    }
+    if(ptr!=NULL)
+    {
+        dfs_post(ptr->left);
+        dfs_post(ptr->right);
+        cout<<ptr->data<<" ";
+    }
+}
 void display(node *ptr, int lvl)
 {
     int i;
@@ -68,7 +134,7 @@ void display(node *ptr, int lvl)
            else
            {
             for (i = 0;i < lvl;i++)
-            cout<<"     ";
+            cout<<"         ";
 	        }
         cout<<ptr->data;
         display(ptr->left, lvl+1);
@@ -82,9 +148,15 @@ int main(){
 
      while (1)
     {
-        cout<<"1.Insert Element "<<endl;
-        cout<<"2.Display"<<endl;
-        cout<<"3.Quit"<<endl;
+        cout<<"\t\t\t\t\t-----------------"<<endl;
+        cout<<"\t\t\t\t\t1.Insert Element "<<endl;
+        cout<<"\t\t\t\t\t2.Display"<<endl;
+        cout<<"\t\t\t\t\t3.Height Of Tree: "<<endl;
+        cout<<"\t\t\t\t\t4.Breadth First Search: "<<endl;
+        cout<<"\t\t\t\t\t5.DFS"<<endl;
+       
+        cout<<"\t\t\t\t\t6.exit"<<endl;
+        cout<<"\t\t\t\t\t-----------------"<<endl;
         cout<<"Enter your choice : ";
         cin>>choice;
         switch(choice)
@@ -101,6 +173,23 @@ int main(){
             cout<<endl;
             break;
         case 3:
+            cout<<"Height Of Tree: ";
+            cout<<height(root)<<endl;
+            break;
+        case 4:
+            cout<<"BFS: ";
+            bsf(root);
+            break;
+        case 5:
+            cout<<"DFS: ";
+            cout<<"Pre Order: ";
+            dfs_pre(root);
+            cout<<"\nin Order: ";
+            dfs_in(root);
+            cout<<"\npost Order: ";
+            dfs_post(root);
+            break;
+        case 6:
             exit(1);
         default:
             cout<<"Wrong choice"<<endl;
